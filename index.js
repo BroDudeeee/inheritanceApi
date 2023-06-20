@@ -5,6 +5,9 @@ import { connectDB } from "./connectDB.js";
 import authRouter from "./routes/auth.js";
 import cardRouter from "./routes/cards.js";
 import referenceRouter from "./routes/references.js";
+import QuestionRouter from "./routes/questions.js";
+import compareRouter from "./routes/compare.js";
+
 const app = express();
 
 dotenv.config();
@@ -14,6 +17,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/auth", authRouter);
 app.use("/api/cards", cardRouter);
 app.use("/api/references", referenceRouter);
+app.use("/api/questions", QuestionRouter);
+app.use("/api/compare", compareRouter);
 
 const port = process.env.PORT || 5000;
 

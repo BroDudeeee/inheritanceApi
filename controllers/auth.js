@@ -14,13 +14,17 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
-  try {
-    const { password, ...others } = req.body;
-    const hashedPassword = bcrypt.hashSync(password, 10);
-    const user = await User.create({ ...others, password: hashedPassword });
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(500).json(error);
+  const checkUser = await User.findOne({ ID: req.body.ID });
+  if (checkUser) return res.status(403).json("User Already Here!");
+  else {
+    try {
+      const { password, ...others } = req.body;
+      const hashedPassword = bcrypt.hashSync(password, 10);
+      const user = await User.create({ ...others, password: hashedPassword });
+      res.status(201).json(user);
+    } catch (error) {
+      res.status(500).json(error);
+    }
   }
 };
 
